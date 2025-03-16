@@ -13,8 +13,8 @@ body {
 
 .composition-container {
   position: relative;
-  width: 800px;
-  height: 600px;
+  width: 900px;
+  height: 700px;
   transform-origin: center;
   will-change: transform;
   box-sizing: border-box;
