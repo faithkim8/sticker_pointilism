@@ -205,4 +205,62 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     });
+    
+    // Function to handle window resize and keep proper scaling
+    function handleResponsiveLayout() {
+        // Get window dimensions
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        
+        // Basic composition dimensions
+        const compositionWidth = 800;
+        const compositionHeight = 600;
+        
+        // Calculate the available space (with some padding)
+        const availableWidth = windowWidth * 0.9;
+        const availableHeight = windowHeight * 0.9;
+        
+        // Calculate scale factor based on available space
+        let scaleX = availableWidth / compositionWidth;
+        let scaleY = availableHeight / compositionHeight;
+        
+        // Use the smaller of the two scales to ensure the entire composition fits
+        let scaleFactor = Math.min(scaleX, scaleY);
+        
+        // Make sure we don't scale up on large screens
+        scaleFactor = Math.min(scaleFactor, 1);
+        
+        // Apply the scale transformation
+        container.style.transform = `scale(${scaleFactor})`;
+        
+        // Adjust container's CSS properties for centering when scaled down
+        if (scaleFactor < 1) {
+            // The amount of size reduction in pixels
+            const widthReduction = compositionWidth * (1 - scaleFactor);
+            const heightReduction = compositionHeight * (1 - scaleFactor);
+            
+            // Apply negative margins to center the scaled container
+            container.style.margin = `${-heightReduction/2}px ${-widthReduction/2}px`;
+            // Add additional margin to center the whole container
+            container.style.position = 'absolute';
+            container.style.left = '50%';
+            container.style.top = '50%';
+            container.style.marginLeft = `-${compositionWidth * scaleFactor / 2}px`;
+            container.style.marginTop = `-${compositionHeight * scaleFactor / 2}px`;
+        } else {
+            container.style.margin = '0 auto';
+            container.style.position = 'relative';
+            container.style.left = '0';
+            container.style.top = '0';
+            container.style.marginLeft = 'auto';
+            container.style.marginRight = 'auto';
+            container.style.marginTop = '20px';
+        }
+    }
+    
+    // Call once on load
+    handleResponsiveLayout();
+    
+    // Call on window resize
+    window.addEventListener('resize', handleResponsiveLayout);
 });

@@ -1,7 +1,23 @@
+/* Fixed CSS for proper mobile display */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .composition-container {
   position: relative;
   width: 800px;
   height: 600px;
+  transform-origin: center;
+  will-change: transform;
+  box-sizing: border-box;
 }
 
 #sticker-8 {
